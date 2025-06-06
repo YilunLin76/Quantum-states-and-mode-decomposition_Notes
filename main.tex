@@ -1,0 +1,123 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{braket}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{sectsty}
+\usepackage{titling}
+\usepackage{tocloft}
+\usepackage{hyperref}
+\geometry{a4paper,  margin=1in}
+\setstretch{1.5}
+\numberwithin{equation}{section}
+\AtBeginDocument{\Large \selectfont}
+\title{Quantum states and mode decomposition (Notes)}
+\author{YILUN LIN}
+\date{June 2025}
+
+\begin{document}
+\maketitle
+\Large\textbf{Overview}
+\newline
+{\Large These notes summarize how quantum states in quantum field theory are represented in Fock space, how field operators are mode-expanded, and how arbitrary states are expanded in the momentum eigenbasis.}
+
+\section{Fock Space and Quantum States}
+\textbf{Core idea:} Fock space organizes states with varying particle number. \\
+\begin{itemize}
+ \item\textbf{Vacuum state}  $\lvert0\rangle$: defined by
+ \begin{equation}
+ a_{\mathbf p}\, \lvert0\rangle = 0,\quad \forall\, \mathbf p.
+ \end{equation}
+ \textit{Physical meaning:} The vacuum contains no particles in any momentum mode.
+ \item \textbf{$n$-particle momentum eigenstate}:
+ \begin{equation}
+ \lvert \mathbf p_1, \dots,\mathbf p_n\rangle = a_{\mathbf p_1}^\dagger\cdots 
+ a_{\mathbf p_n}^\dagger\,\lvert0\rangle,
+ \end{equation}
+ satisfying
+ \begin{equation}
+ \hat P^\mu\, \lvert \mathbf p_1, \dots,\mathbf p_n\rangle = \Bigl(\sum_i p_i^\mu\Bigr)\,\lvert \mathbf p_1,\dots,\mathbf p_n\rangle.
+ \end{equation}
+ \textit{Physical meaning:} Each excitation adds a particle with momentum $p_i$,
+ total four-momentum is sum of individual momenta.
+\\[1em]
+\end{itemize}
+
+\section{Field Operator and Mode Decomposition}
+\textbf{Core idea:} The field operator creates or annihilates quanta at spacetime points, expanded in momentum modes. \\[1em]
+For a free real scalar field $\hat\phi(x)$ in the Heisenberg picture:
+\begin{equation}
+   \hat\phi(t,\mathbf x) = \int\!\frac{d^3p}{(2\pi)^3}\, \frac{1}{\sqrt{2E_{\mathbf p}}}\Bigl[a_{\mathbf p} e^{-i(E_{\mathbf p}t-\mathbf p\cdot\mathbf x)} + a_{\mathbf p}^\dagger e^{+i(E_{\mathbf p}t-\mathbf p \cdot \mathbf x)}\Bigr]. 
+\end{equation}   
+\begin{equation}
+   [a_{\mathbf p}, \, a_{\mathbf p'}^\dagger] = (2\pi)^3 \delta^{(3)} (\mathbf p-\mathbf p').
+\end{equation}
+\\[1em]
+\textit{Physical meaning:} Each Fourier mode behaves as an independent harmonic oscillator; the field operator sums over these to create or annihilate particles at $(t,\mathbf x)$.
+\\[1em]
+\section{Expansion of an Arbitrary State}
+\textbf{Core idea:} Any state in Fock space can be viewed as a superposition of 
+$n$-particle momentum eigenstates. \\
+\begin{equation}
+  \lvert\Psi\rangle = \sum_{n=0}^\infty \frac{1}{n!} \int\!\prod_{i=1}^n\frac{d^3p_i}{(2\pi)^3}\; \Psi_n(\mathbf p_1, \dots, \mathbf p_n)\; a^\dagger_{\mathbf p_1}\cdots a^\dagger_{\mathbf p_n}\,\lvert0\rangle.
+\end{equation}
+\textbf{Coefficient functions:}
+\begin{equation}
+  \Psi_n(\mathbf p_1, \dots, \mathbf p_n) = \langle0\mid a_{\mathbf p_n}\cdots
+  a_{\mathbf p_n}\mid\Psi\rangle.
+\end{equation}
+\textit{Physical significance:} $\Psi_n(\{\mathbf p_i\})$ is the $n$-particle wavefunction in momentum space, encoding the amplitude for finding particles with those momenta.
+\\[1em]
+
+\section{Computing the Coefficient Functions}
+\textbf{Core idea:} Projecting the state onto basis states extracts the coefficient wavefunctions. \\[1em]
+\textbf{Example:  One-Particle States}
+\begin{equation}
+   \lvert\Psi\rangle = \int \! \frac{d^3p'}{(2\pi)^3}\; f(\mathbf p')\; 
+   a_{\mathbf p'}^\dagger\lvert0\rangle.
+\end{equation}
+Project:
+\begin{equation}
+   \Psi_1(\mathbf p) 
+   = \langle0\mid a_{\mathbf p}\, \lvert\Psi\rangle 
+   = \int \! \frac{d^3p'}{(2\pi)^3}\; f(\mathbf p')\; \langle0\mid a_{\mathbf p} 
+     a_{\mathbf p'}^\dagger \mid0\rangle 
+   = f(\mathbf p).
+\end{equation}
+\textit{Physical significance:} The function $f(\mathbf p)$ chosen in the state construction directly becomes the momentum-space wavefunction.
+\\[1em]
+
+\section{Position-Space Wavefunction}
+\textbf{Core idea:} Field operators can create localized excitations, giving position-space amplitudes. \\[1em]
+\textbf{Definition}
+\begin{equation}
+   \hat\psi^\dagger(\mathbf x) = \int \! \frac{d^3p}{(2\pi)^3\sqrt{2E_{\mathbf p}}}\, a_{\mathbf p}^\dagger e^{-i\mathbf p\cdot\mathbf x}.
+\end{equation}
+\textbf{Position eigenstate:}
+\begin{equation}
+   \lvert\mathbf x\rangle = \hat\psi^\dagger(\mathbf x)\lvert0\rangle,
+   \quad\langle\mathbf x \mid\mathbf y\rangle = \delta^{(3)}(\mathbf x-\mathbf y).
+\end{equation}
+\textbf{$N$-particle position wavefunction:}
+\begin{equation}
+   \Psi(\mathbf x_1, \dots, \mathbf x_n) = \langle0\mid\hat\psi(\mathbf x_1)
+   \cdots\hat\psi(\mathbf x_n)\mid\Psi\rangle.
+\end{equation}
+\textbf{Physical meaning:} $\Psi(\{\mathbf x_i\})$ encodes the joint probability 
+amplitude for finding particles at spatial points.
+\\[1em]
+
+\section{Practical Steps}
+\textbf{Core idea:} Workflow for translating abstract states to usable wavefunctions.   \\
+\begin{enumerate}
+   \item Choose a basis (momentum, angular momentum, position, or other physical quantities) according to symmetry or measurement.
+   \item Apply corresponding annihilation or field operators to project $\lvert\Psi\rangle$.
+   \item Extract coefficient functions (wavefunctions or wavefunctionals).
+   \item Use these in integrals to compute physical observables or correlation functions.
+\end{enumerate}
+
+\end{document}
